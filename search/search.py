@@ -87,10 +87,49 @@ def depthFirstSearch(problem):
     print "Start's successors:", problem.getSuccessors(problem.getStartState())
     """
     "*** YOUR CODE HERE ***"
+    actions = []
+    visited = []
+    frontier = util.Stack()
+
+    """Node consists of state successor and a pointer to its parent"""
+    node = {}
+    node['state'] = problem.getStartState()
+    node['action'] = None
+    node['parent'] = None
+
+    frontier.push(node)
+
+    while not frontier.isEmpty():
+        node = frontier.pop()
+        state = node['state']
+
+        if state not in visited:
+            visited.append(state)
+
+            if problem.isGoalState(state):
+                break
+
+
+            for successor in problem.getSuccessors(state):
+                childNode = {}
+                childNode['state'] = successor[0]
+                childNode['action'] = successor[1]
+                childNode['parent'] = node
+
+                frontier.push(childNode)
+
+    while node['action'] != None:
+        actions.insert(0, node['action'])
+        node = node['parent']
+
+    return actions
+
+
     util.raiseNotDefined()
 
 def breadthFirstSearch(problem):
     """Search the shallowest nodes in the search tree first."""
+    
     "*** YOUR CODE HERE ***"
     util.raiseNotDefined()
 
